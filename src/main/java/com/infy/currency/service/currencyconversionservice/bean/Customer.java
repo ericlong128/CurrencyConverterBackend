@@ -13,28 +13,31 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table(name="tbl_customer")
+@Table(name = "tbl_customer")
 public class Customer {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column
 	private String name;
-	
+
+	@Column
+	private String u_password;
+
 	@Column
 	private Long age;
-	
+
 	@Column
 	private String location;
-	
+
 	@CreationTimestamp
-	@Column(name="created_at", nullable=false, updatable=false)
+	@Column(name = "created_at", nullable = false, updatable = false)
 	private Date createdAt;
-	
+
 	@UpdateTimestamp
-	@Column(name="updated_at")
+	@Column(name = "updated_at")
 	private Date updatedAt;
 
 	public Long getId() {
@@ -51,6 +54,14 @@ public class Customer {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getU_password() {
+		return u_password;
+	}
+
+	public void setU_password(String u_password) {
+		this.u_password = u_password;
 	}
 
 	public Long getAge() {
