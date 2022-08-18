@@ -1,8 +1,8 @@
 package com.infy.currency.service.currencyconversionservice.controller;
 
+import java.util.Collections;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Collections;
 
 import com.infy.currency.service.currencyconversionservice.bean.Role;
 import com.infy.currency.service.currencyconversionservice.bean.User;
@@ -38,26 +36,31 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @PostMapping("/signin")
-    public ResponseEntity<String> authenticateUser(@RequestBody LoginRequestDTO loginDto){
+    @PostMapping(path = "/signin", produces = "application/json")
+    public LoginRequestDTO authenticateUser(@RequestBody LoginRequestDTO loginDto){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginDto.getUsernameOrEmail(), loginDto.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return new ResponseEntity<>("User signed-in successfully!.", HttpStatus.OK);
+        loginDto.setMessage("User Added succesfully");
+        return loginDto;
     }
 
-    @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestBody SignUpRequestDTO signUpDto){
+    @PostMapping(path = "/signup", produces = "application/json")
+    public SignUpRequestDTO registerUser(@RequestBody SignUpRequestDTO signUpDto){
 
         // add check for username exists in a DB
         if(customerRepository.existsByUsername(signUpDto.getName())){
-            return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST);
+        	SignUpRequestDTO signUpRequestDTO = new SignUpRequestDTO();
+        	signUpRequestDTO.setMessage("User Already Taken");
+            return  signUpRequestDTO;
         }
 
         // add check for email exists in DB
         if(customerRepository.existsByEmail(signUpDto.getEmail())){
-            return new ResponseEntity<>("Email is already taken!", HttpStatus.BAD_REQUEST);
+        	SignUpRequestDTO user2 = new SignUpRequestDTO();
+        	user2.setMessage("Email Already Taken");
+            return user2;
         }
 
         // create user object
@@ -74,7 +77,7 @@ public class AuthController {
 
         customerRepository.save(user);
 
-        return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
+        return signUpDto;
 
     }
 }

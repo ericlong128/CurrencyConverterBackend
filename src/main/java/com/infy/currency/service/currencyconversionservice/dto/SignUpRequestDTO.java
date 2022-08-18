@@ -56,4 +56,9 @@ public class SignUpRequestDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public void setMessage(String string) {
+		// TODO Auto-generated method stub
+		
+	}
 }

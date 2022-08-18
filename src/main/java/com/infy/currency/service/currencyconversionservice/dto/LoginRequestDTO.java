@@ -29,4 +29,9 @@ public class LoginRequestDTO {
     public void setPassword(String password) {
         this.password = password;
     }
+
+	public void setMessage(String string) {
+		// TODO Auto-generated method stub
+		
+	}
 }

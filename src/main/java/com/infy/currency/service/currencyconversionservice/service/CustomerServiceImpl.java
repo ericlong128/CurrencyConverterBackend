@@ -40,7 +40,6 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	@Override
 	public User update(User customer) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
