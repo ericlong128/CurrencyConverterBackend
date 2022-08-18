@@ -3,16 +3,16 @@ package com.infy.currency.service.currencyconversionservice.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.infy.currency.service.currencyconversionservice.bean.Customer;
+import com.infy.currency.service.currencyconversionservice.bean.User;
 
 
 public interface ICustomerService {
 		
-		Customer add(Customer customer);
+		User add(User customer);
 		
 		List get();
 		
-		Customer update(Customer customer);
+		User update(User customer);
 		
 		Optional get(Long id);
 		

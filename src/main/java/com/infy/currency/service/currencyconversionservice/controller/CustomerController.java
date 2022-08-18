@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.infy.currency.service.currencyconversionservice.bean.Customer;
+import com.infy.currency.service.currencyconversionservice.bean.User;
 import com.infy.currency.service.currencyconversionservice.service.ICustomerService;
 
 
@@ -27,9 +27,9 @@ public class CustomerController {
 	ICustomerService customerService;
 	
 	@GetMapping("/customers")
-	public ResponseEntity<List<Customer>> getAllCustomers() {
+	public ResponseEntity<List<User>> getAllCustomers() {
 		try {
-			List<Customer> list = customerService.get();
+			List<User> list = customerService.get();
 			
 			if (list.isEmpty() || list.size() == 0) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -42,30 +42,30 @@ public class CustomerController {
 	}
 	
 	@GetMapping("/customers/{id}")
-	public ResponseEntity<Customer> getCustomer(@PathVariable Long id) {
-		Optional<Customer> customer = customerService.get(id);
+	public ResponseEntity<User> getCustomer(@PathVariable Long id) {
+		Optional<User> customer = customerService.get(id);
 		
 		if (customer.isPresent()) {
-			return new ResponseEntity<Customer>(customer.get(), HttpStatus.OK);
+			return new ResponseEntity<User>(customer.get(), HttpStatus.OK);
 		}
-		return new ResponseEntity<Customer>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 	}
 	
 	@PostMapping("/customers")
-	public ResponseEntity<Customer> saveCustomer(@RequestBody Customer customer) {
+	public ResponseEntity<User> saveCustomer(@RequestBody User customer) {
 		try {
-			return new ResponseEntity<Customer>(customerService.add(customer), HttpStatus.CREATED);
+			return new ResponseEntity<User>(customerService.add(customer), HttpStatus.CREATED);
 		} catch (Exception e) {
-			return new ResponseEntity<Customer>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<User>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@PutMapping("/customers")
-	public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer) {
+	public ResponseEntity<User> updateCustomer(@RequestBody User customer) {
 		try {
-			return new ResponseEntity<Customer>(customerService.add(customer), HttpStatus.OK);
+			return new ResponseEntity<User>(customerService.add(customer), HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<Customer>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<User>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	

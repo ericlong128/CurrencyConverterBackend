@@ -44,9 +44,7 @@ public class CurrencyConversionCalculator {
 			HttpURLConnection request = (HttpURLConnection) url.openConnection();
 			request.connect();
 
-			@SuppressWarnings("deprecation")
 			JsonParser jp = new JsonParser();
-			@SuppressWarnings("deprecation")
 			JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
 			JsonObject jsonobj = root.getAsJsonObject();
 

@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.infy.currency.service.currencyconversionservice.bean.Customer;
+import com.infy.currency.service.currencyconversionservice.bean.User;
 import com.infy.currency.service.currencyconversionservice.repo.ICustomerRepo;
 
 
@@ -17,7 +17,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	ICustomerRepo customerRepo;
 	
 	@Override
-	public Customer add(Customer customer) {
+	public User add(User customer) {
 		return customerRepo.save(customer);
 	}
 
@@ -34,12 +34,12 @@ public class CustomerServiceImpl implements ICustomerService {
 	@Override
 	public void delete(Long id) {
 		if (get(id).isPresent()) {
-			customerRepo.delete((Customer) get(id).get());
+			customerRepo.delete((User) get(id).get());
 		}
 	}
 
 	@Override
-	public Customer update(Customer customer) {
+	public User update(User customer) {
 		// TODO Auto-generated method stub
 		return null;
 	}

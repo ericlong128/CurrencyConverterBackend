@@ -1,13 +1,20 @@
 package com.infy.currency.service.currencyconversionservice.repo;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.infy.currency.service.currencyconversionservice.bean.Customer;
+import com.infy.currency.service.currencyconversionservice.bean.User;
 
 
 
 @Repository
-public interface ICustomerRepo extends JpaRepository<Customer, Long> {
-
+public interface ICustomerRepo extends JpaRepository<User, Long> {
+	
+	Optional<User> findByEmail(String email);
+    Optional<User> findByUsernameOrEmail(String username, String email);
+    Optional<User> findByUsername(String username);
+    Boolean existsByUsername(String username);
+    Boolean existsByEmail(String email);
 }

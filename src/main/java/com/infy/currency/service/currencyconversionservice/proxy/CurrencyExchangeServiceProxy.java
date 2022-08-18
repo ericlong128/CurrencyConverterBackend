@@ -1,12 +1,12 @@
 package com.infy.currency.service.currencyconversionservice.proxy;
 /*
- * package com.infy.currency.service.currencyconversionservice.proxy;
+ * package com.Niraj.currency.service.currencyconversionservice.proxy;
  * 
  * import org.springframework.cloud.openfeign.FeignClient; import
  * org.springframework.web.bind.annotation.GetMapping; import
  * org.springframework.web.bind.annotation.PathVariable;
  * 
- * import com.infy.currency.service.currencyconversionservice.bean.
+ * import com.Niraj.currency.service.currencyconversionservice.bean.
  * CurrencyConversionBean;
  * 
  * @FeignClient(name = "exchangeservice", url
