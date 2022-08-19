@@ -63,13 +63,7 @@ public class User {
     
 	@Column
     private Integer loginCount = 0;
-    
-	@Column
-    private String ssoType;
-    
-	@Column
-    private DateTime loginAt;
-	
+      
 	@CreationTimestamp
 	@Column(name="created_at", nullable=false, updatable=false)
 	private Date createdAt;
@@ -186,22 +180,6 @@ public class User {
 
 	public void setLoginCount(Integer loginCount) {
 		this.loginCount = loginCount;
-	}
-
-	public String getSsoType() {
-		return ssoType;
-	}
-
-	public void setSsoType(String ssoType) {
-		this.ssoType = ssoType;
-	}
-
-	public DateTime getLoginAt() {
-		return loginAt;
-	}
-
-	public void setLoginAt(DateTime loginAt) {
-		this.loginAt = loginAt;
 	}
 
 	public String getGender() {
