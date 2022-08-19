@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.infy.currency.service.currencyconversionservice.bean.Role;
 import com.infy.currency.service.currencyconversionservice.bean.User;
 import com.infy.currency.service.currencyconversionservice.dto.LoginRequestDTO;
+import com.infy.currency.service.currencyconversionservice.dto.ResponseDTO;
 import com.infy.currency.service.currencyconversionservice.dto.SignUpRequestDTO;
 import com.infy.currency.service.currencyconversionservice.repo.ICustomerRepo;
 import com.infy.currency.service.currencyconversionservice.repo.RoleRepository;
@@ -39,13 +40,14 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping(path = "/signin", produces = "application/json")
-    public LoginRequestDTO authenticateUser(@RequestBody LoginRequestDTO loginDto){
+    public ResponseDTO authenticateUser(@RequestBody LoginRequestDTO loginDto){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginDto.getUsernameOrEmail(), loginDto.getPassword()));
 
+        ResponseDTO responseDTO = new ResponseDTO();        
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        loginDto.setMessage("User Added succesfully");
-        return loginDto;
+        responseDTO.setMessage("User Added succesfully");
+        return responseDTO;
     }
 
     @PostMapping(path = "/signup", produces = "application/json")

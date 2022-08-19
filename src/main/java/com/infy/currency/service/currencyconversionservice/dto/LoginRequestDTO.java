@@ -5,6 +5,7 @@ public class LoginRequestDTO {
     private String emailId;
     private String password;
     private String usernameOrEmail;
+    private String message;
 
     public String getUsernameOrEmail() {
 		return usernameOrEmail;
@@ -29,9 +30,12 @@ public class LoginRequestDTO {
     public void setPassword(String password) {
         this.password = password;
     }
+    
+    public String getMessage() {
+    	return message;
+    }
 
-	public void setMessage(String string) {
-		// TODO Auto-generated method stub
-		
+	public void setMessage(String message) {
+		this.message = message;
 	}
 }

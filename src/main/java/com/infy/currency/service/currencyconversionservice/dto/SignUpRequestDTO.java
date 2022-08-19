@@ -8,6 +8,7 @@ public class SignUpRequestDTO {
     private String password;
     private Long age;
     private String phoneNumber;
+    private String message;
 
     public Long getAge() {
 		return age;
@@ -56,9 +57,12 @@ public class SignUpRequestDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public String getMessage() {
+		return message;
+	}
 
-	public void setMessage(String string) {
-		// TODO Auto-generated method stub
-		
+	public void setMessage(String message) {
+		this.message = message;		
 	}
 }
