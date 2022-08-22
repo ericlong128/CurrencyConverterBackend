@@ -12,7 +12,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity handleException(Exception e){
 
         APIResponse apiResponse = new APIResponse();
-        apiResponse.setError("Oops..Something went wrong!");
+        apiResponse.setError("Invalid Username and Password!");
         apiResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR.value()).body(apiResponse);
