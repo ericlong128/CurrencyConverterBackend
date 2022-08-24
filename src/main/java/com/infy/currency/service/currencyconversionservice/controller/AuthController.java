@@ -76,7 +76,7 @@ public class AuthController {
         user.setAge(signUpDto.getAge());
         user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
 
-        Role roles = roleRepository.findByName("ROLE_ADMIN").get();
+        Role roles = roleRepository.findByName(signUpDto.getRole()).get();
         user.setRoles(Collections.singleton(roles));
 
         customerRepository.save(user);
