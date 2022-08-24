@@ -76,7 +76,7 @@ public class User {
     @JoinTable(name = "user_roles",
         joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
         inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private Set<Role> roles;
+    private Set<Role> role;
 
 	public Long getId() {
 		return id;
@@ -190,11 +190,11 @@ public class User {
 		this.gender = gender;
 	}
 
-	public Set<Role> getRoles() {
-		return roles;
+	public Set<Role> getRole() {
+		return role;
 	}
 
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
+	public void setRole(Set<Role> roles) {
+		this.role = roles;
 	}
 }

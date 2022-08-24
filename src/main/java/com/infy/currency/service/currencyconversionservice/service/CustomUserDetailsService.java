@@ -30,7 +30,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                .orElseThrow(() ->
                        new UsernameNotFoundException("Customer not found with username or email:" + usernameOrEmail));
         return new org.springframework.security.core.userdetails.User(user.getEmail(),
-                user.getPassword(), mapRolesToAuthorities(user.getRoles()));
+                user.getPassword(), mapRolesToAuthorities(user.getRole()));
     }
 
     private Collection< ? extends GrantedAuthority> mapRolesToAuthorities(Set<Role> roles){

@@ -43,10 +43,18 @@ public class AuthController {
     public ResponseDTO authenticateUser(@RequestBody LoginRequestDTO loginDto){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginDto.getUsernameOrEmail(), loginDto.getPassword()));
-
+        
+        User signIn = customerRepository.findByUsername(loginDto.getUsernameOrEmail());
         ResponseDTO responseDTO = new ResponseDTO();        
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        responseDTO.setMessage("User Added succesfully");
+        responseDTO.setId(signIn.getId());
+        responseDTO.setUsername(signIn.getUsername());
+        responseDTO.setEmail(signIn.getEmail());
+        responseDTO.setName(signIn.getName());
+        responseDTO.setPassword(signIn.getPassword());
+        responseDTO.setAge(signIn.getAge());
+        responseDTO.setPhoneNumber(signIn.getPhoneNumber());
+        responseDTO.setRole(signIn.getRole());
         return responseDTO;
     }
 
@@ -77,7 +85,7 @@ public class AuthController {
         user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
 
         Role roles = roleRepository.findByName(signUpDto.getRole()).get();
-        user.setRoles(Collections.singleton(roles));
+        user.setRole(Collections.singleton(roles));
 
         customerRepository.save(user);
 
