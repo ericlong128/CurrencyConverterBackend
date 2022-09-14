@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +20,9 @@ import com.infy.currency.service.currencyconversionservice.bean.User;
 import com.infy.currency.service.currencyconversionservice.dto.SignUpRequestDTO;
 import com.infy.currency.service.currencyconversionservice.repo.ICustomerRepo;
 import com.infy.currency.service.currencyconversionservice.service.ICustomerService;
+import com.infy.currency.service.currencyconversionservice.dto.ResponseMessage;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api")
 public class CustomerController {
@@ -30,7 +33,7 @@ public class CustomerController {
 	@Autowired
 	ICustomerRepo customerRepo;
 
-	@GetMapping("/customers")
+	@GetMapping(path = "/customers", produces = "application/json")
 	public ResponseEntity<List<User>> getAllCustomers() {
 		try {
 			List<User> list = customerService.get();
@@ -65,9 +68,17 @@ public class CustomerController {
 	}
 
 	@PutMapping("/customers")
-	public ResponseEntity<String> updateCustomer(@RequestBody SignUpRequestDTO dto) throws Exception {
+	public ResponseEntity<ResponseMessage> updateCustomer(@RequestBody SignUpRequestDTO dto) throws Exception {
+
+		ResponseMessage message = new ResponseMessage();
+		if (dto.getPassword() == "") {
+
+			message.setMessage("Unable to update - password is required!");
+			return new ResponseEntity<ResponseMessage>(message, HttpStatus.BAD_REQUEST);
+		}
 		customerService.update(dto);
-		return new ResponseEntity<String>("User has been updated successfully!", HttpStatus.OK);
+		message.setMessage("User has been updated successfully!");
+		return new ResponseEntity<ResponseMessage>(message, HttpStatus.OK);
 
 	}
 
