@@ -1,6 +1,7 @@
 package com.infy.currency.service.currencyconversionservice.controller;
 
 import java.util.Collections;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +12,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.infy.currency.service.currencyconversionservice.bean.Role;
 import com.infy.currency.service.currencyconversionservice.bean.User;
 import com.infy.currency.service.currencyconversionservice.dto.LoginRequestDTO;
-import com.infy.currency.service.currencyconversionservice.dto.ResponseDTO;
 import com.infy.currency.service.currencyconversionservice.dto.SignUpRequestDTO;
 import com.infy.currency.service.currencyconversionservice.repo.ICustomerRepo;
 import com.infy.currency.service.currencyconversionservice.repo.RoleRepository;
@@ -47,14 +46,15 @@ public class AuthController {
     private ICustomerService customerService;
 
     @PostMapping(path = "/signin", produces = "application/json")
-    public ResponseEntity<LoginRequestDTO> authenticateUser(@RequestBody LoginRequestDTO loginDto){
+    public ResponseEntity<User> authenticateUser(@RequestBody LoginRequestDTO loginDto) throws Exception {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginDto.getUsernameOrEmail(), loginDto.getPassword()));
 
-//        ResponseDTO responseDTO = new ResponseDTO();        
+        Optional<User> optUser = customerRepository.findByUsername(loginDto.getUsernameOrEmail());
+        User signInUser = optUser.orElseThrow(()->new Exception("Could not find User!"));
+        
         SecurityContextHolder.getContext().setAuthentication(authentication);
-//        responseDTO.setMessage("User Added succesfully");
-        return new ResponseEntity<LoginRequestDTO>(loginDto, HttpStatus.ACCEPTED);
+        return new ResponseEntity<User>(signInUser, HttpStatus.ACCEPTED);
     }
 
     @PostMapping(path = "/signup", produces = "application/json")
