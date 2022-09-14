@@ -9,6 +9,7 @@ public class SignUpRequestDTO {
     private Long age;
     private String phoneNumber;
     private String message;
+    private String role;
 
     public Long getAge() {
 		return age;
@@ -65,4 +66,13 @@ public class SignUpRequestDTO {
 	public void setMessage(String message) {
 		this.message = message;		
 	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+	
 }

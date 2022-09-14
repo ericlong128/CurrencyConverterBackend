@@ -3,12 +3,15 @@ package com.infy.currency.service.currencyconversionservice.controller;
 import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +24,7 @@ import com.infy.currency.service.currencyconversionservice.dto.ResponseDTO;
 import com.infy.currency.service.currencyconversionservice.dto.SignUpRequestDTO;
 import com.infy.currency.service.currencyconversionservice.repo.ICustomerRepo;
 import com.infy.currency.service.currencyconversionservice.repo.RoleRepository;
+import com.infy.currency.service.currencyconversionservice.service.ICustomerService;
 
 @CrossOrigin
 @RestController
@@ -38,16 +42,19 @@ public class AuthController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    
+    @Autowired
+    private ICustomerService customerService;
 
     @PostMapping(path = "/signin", produces = "application/json")
-    public ResponseDTO authenticateUser(@RequestBody LoginRequestDTO loginDto){
+    public ResponseEntity<LoginRequestDTO> authenticateUser(@RequestBody LoginRequestDTO loginDto){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginDto.getUsernameOrEmail(), loginDto.getPassword()));
 
-        ResponseDTO responseDTO = new ResponseDTO();        
+//        ResponseDTO responseDTO = new ResponseDTO();        
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        responseDTO.setMessage("User Added succesfully");
-        return responseDTO;
+//        responseDTO.setMessage("User Added succesfully");
+        return new ResponseEntity<LoginRequestDTO>(loginDto, HttpStatus.ACCEPTED);
     }
 
     @PostMapping(path = "/signup", produces = "application/json")
@@ -75,13 +82,13 @@ public class AuthController {
         user.setPhoneNumber(signUpDto.getPhoneNumber());
         user.setAge(signUpDto.getAge());
         user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
+        user.setOtpToken(customerService.generateToken());
 
-        Role roles = roleRepository.findByName("ROLE_ADMIN").get();
+        Role roles = roleRepository.findByName(signUpDto.getRole()).get();
         user.setRoles(Collections.singleton(roles));
 
         customerRepository.save(user);
 
         return signUpDto;
-
     }
 }

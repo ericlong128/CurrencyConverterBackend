@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.infy.currency.service.currencyconversionservice.bean.User;
+import com.infy.currency.service.currencyconversionservice.dto.SignUpRequestDTO;
 
 
 public interface ICustomerService {
@@ -12,9 +13,17 @@ public interface ICustomerService {
 		
 		List get();
 		
-		User update(User customer);
+		void update(SignUpRequestDTO dto) throws Exception;
 		
 		Optional get(Long id);
 		
+		Long get(String username);
+		
 		void delete(Long id);
+		
+		public boolean checkOTPToken(String username, Long otpToken);
+		
+		public Integer generateToken();
+		
+		void updateToken(SignUpRequestDTO signUpRequestDTO) throws Exception;
 }
